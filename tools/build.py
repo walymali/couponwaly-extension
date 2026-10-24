@@ -26,7 +26,7 @@ manifest = {
     'permissions': ['storage', 'alarms'],
     'host_permissions': ['https://couponwaly.com/*'] + matches,
     'content_scripts': [{'matches': matches, 'js': ['content.js'], 'run_at': 'document_idle'}],
-    'web_accessible_resources': [{'resources': ['icons/*'], 'matches': matches}],
+    'web_accessible_resources': [{'resources': ['icons/*', '_locales/*/messages.json'], 'matches': matches}],
     'homepage_url': 'https://couponwaly.com/?utm_source=extension',
 }
 (ROOT / 'src' / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=1))

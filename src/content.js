@@ -4,11 +4,16 @@
 (() => {
   if (window.__cwExt) return;
   window.__cwExt = true;
-  const t = (k, s) => chrome.i18n.getMessage(k, s) || k;
-  const rtl = (chrome.i18n.getUILanguage() || 'ar').startsWith('ar');
+  let M = {};
+  const t = (k, s = []) => { const m = M[k]; if (!m) return chrome.i18n.getMessage(k, s) || k; return m.message.replace('$A$', s[0] ?? '').replace('$B$', s[1] ?? ''); };
+  let rtl = true;
   const host = location.hostname;
 
   chrome.runtime.sendMessage({ type: 'store', host }, async (res) => {
+    const pref = await chrome.storage.local.get('lang');
+    const lang = pref.lang || ((chrome.i18n.getUILanguage() || 'ar').startsWith('ar') ? 'ar' : 'en');
+    rtl = lang === 'ar';
+    try { M = await (await fetch(chrome.runtime.getURL(`_locales/${lang}/messages.json`))).json(); } catch (e) {}
     const st = res && res.store;
     if (!st || !st.codes || !st.codes.length) return;
     const key = 'cw_dismiss_' + st.id;

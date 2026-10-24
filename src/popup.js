@@ -1,10 +1,14 @@
 // Couponwaly extension — toolbar popup: the codes of the shop in the current tab, and a searchable store list.
-const t = (k, s) => chrome.i18n.getMessage(k, s) || k;
-const rtl = (chrome.i18n.getUILanguage() || 'ar').startsWith('ar');
-document.documentElement.lang = rtl ? 'ar' : 'en';
-document.documentElement.dir = rtl ? 'rtl' : 'ltr';
-document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
-document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+// Texts follow the language chosen in the popup (not only the browser's), from _locales/<lang>/messages.json.
+let M = {};
+const t = (k, s = []) => { const m = M[k]; if (!m) return chrome.i18n.getMessage(k, s) || k; return m.message.replace('$A$', s[0] ?? '').replace('$B$', s[1] ?? ''); };
+async function loadLang(lang) {
+  M = await (await fetch(chrome.runtime.getURL(`_locales/${lang}/messages.json`))).json();
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+}
 
 const send = (m) => new Promise((r) => chrome.runtime.sendMessage(m, r));
 let feed = { stores: [] };
@@ -66,12 +70,13 @@ function list(q = '') {
 (async () => {
   const res = await send({ type: 'feed' });
   feed = res.feed || feed;
+  await loadLang(res.settings.lang);
   const cc = document.getElementById('cc');
   cc.value = res.settings.cc;
   cc.addEventListener('change', async () => { feed = (await send({ type: 'settings', settings: { cc: cc.value } })).feed; init(); });
   const lang = document.getElementById('lang');
   lang.value = res.settings.lang;
-  lang.addEventListener('change', async () => { feed = (await send({ type: 'settings', settings: { lang: lang.value } })).feed; init(); });
+  lang.addEventListener('change', async () => { feed = (await send({ type: 'settings', settings: { lang: lang.value } })).feed; await loadLang(lang.value); init(); });
   document.getElementById('q').addEventListener('input', (e) => list(e.target.value));
   init();
 })();

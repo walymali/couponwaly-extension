@@ -381,7 +381,8 @@
  "web_accessible_resources": [
   {
    "resources": [
-    "icons/*"
+    "icons/*",
+    "_locales/*/messages.json"
    ],
    "matches": [
     "https://*.ae.hm.com/*",

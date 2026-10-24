@@ -6,6 +6,7 @@ const out = path.resolve(new URL('.', import.meta.url).pathname);
 const ctx = await chromium.launchPersistentContext('', { headless: true, channel: 'chromium', args: [`--disable-extensions-except=${ext}`, `--load-extension=${ext}`, '--lang=ar'], locale: 'ar-SA', viewport: { width: 1280, height: 800 } });
 let [sw] = ctx.serviceWorkers(); if (!sw) sw = await ctx.waitForEvent('serviceworker');
 const id = sw.url().split('/')[2];
+await sw.evaluate(() => chrome.storage.local.set({ lang: 'ar', cc: 'sa' }));
 await new Promise(r => setTimeout(r, 4000)); // feed download
 const page = ctx.pages()[0] || await ctx.newPage();
 for (const p of ctx.pages()) if (p !== page) await p.close();
