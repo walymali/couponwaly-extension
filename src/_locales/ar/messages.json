@@ -1,0 +1,60 @@
+{
+ "appName": {
+  "message": "كوبون والي"
+ },
+ "appDesc": {
+  "message": "أكواد خصم شغالة لمتاجر السعودية والخليج تظهر لك وأنت على موقع المتجر، بضغطة واحدة تنسخ الكود."
+ },
+ "cardTitle": {
+  "message": "$A$ أكواد من كوبون والي لـ $B$",
+  "placeholders": {
+   "a": {
+    "content": "$1"
+   },
+   "b": {
+    "content": "$2"
+   }
+  }
+ },
+ "showCodes": {
+  "message": "اعرض الأكواد"
+ },
+ "copy": {
+  "message": "انسخ"
+ },
+ "copied": {
+  "message": "اتنسخ ✓"
+ },
+ "copyOpen": {
+  "message": "انسخ وافتح المتجر"
+ },
+ "close": {
+  "message": "إغلاق"
+ },
+ "footNote": {
+  "message": "الأكواد من كوبون والي، وقد نحصل على عمولة لو اشتريت عبر رابطنا."
+ },
+ "allCodes": {
+  "message": "كل أكواد المتجر"
+ },
+ "searchStore": {
+  "message": "دوّر على متجر…"
+ },
+ "noStore": {
+  "message": "مالقينا متجر بالاسم ده."
+ },
+ "nCodes": {
+  "message": "$A$ أكواد",
+  "placeholders": {
+   "a": {
+    "content": "$1"
+   }
+  }
+ },
+ "back": {
+  "message": "رجوع"
+ },
+ "openSite": {
+  "message": "افتح كوبون والي"
+ }
+}

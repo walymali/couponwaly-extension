@@ -1,0 +1,60 @@
+{
+ "appName": {
+  "message": "Couponwaly"
+ },
+ "appDesc": {
+  "message": "Working promo codes for Saudi and Gulf stores, shown while you shop on the store's site. Copy a code in one click."
+ },
+ "cardTitle": {
+  "message": "$A$ Couponwaly codes for $B$",
+  "placeholders": {
+   "a": {
+    "content": "$1"
+   },
+   "b": {
+    "content": "$2"
+   }
+  }
+ },
+ "showCodes": {
+  "message": "Show codes"
+ },
+ "copy": {
+  "message": "Copy"
+ },
+ "copied": {
+  "message": "Copied ✓"
+ },
+ "copyOpen": {
+  "message": "Copy & open store"
+ },
+ "close": {
+  "message": "Close"
+ },
+ "footNote": {
+  "message": "Codes by Couponwaly. We may earn a commission if you shop through our link."
+ },
+ "allCodes": {
+  "message": "All store codes"
+ },
+ "searchStore": {
+  "message": "Search a store…"
+ },
+ "noStore": {
+  "message": "No store found."
+ },
+ "nCodes": {
+  "message": "$A$ codes",
+  "placeholders": {
+   "a": {
+    "content": "$1"
+   }
+  }
+ },
+ "back": {
+  "message": "Back"
+ },
+ "openSite": {
+  "message": "Open Couponwaly"
+ }
+}
