@@ -8,13 +8,13 @@
 - EN: Couponwaly – Working Promo Codes for Saudi & Gulf Stores
 
 ## الوصف المختصر (أقصى حاجة 132 حرف)
-- AR: أكواد خصم شغالة لنون ونمشي وماكس فاشون وأكتر من 70 متجر خليجي، بتظهر لك وانت بتتسوق وتنسخها بضغطة.
-- EN: Working promo codes for Noon, Namshi, Max Fashion and 70+ Gulf stores, shown while you shop. Copy in one click.
+- AR: أكواد خصم شغالة لأكتر من 70 متجر خليجي، بتظهر لك وانت بتتسوق وتنسخها بضغطة.
+- EN: Working promo codes for 70+ Gulf stores, shown while you shop. Copy in one click.
 
 ## الوصف الكامل (AR)
 إضافة كوبون والي بتوريك أكواد الخصم الشغالة للمتجر اللي انت فاتحه، من غير ما تدور في جوجل.
 
-• بتشتغل على أكتر من 70 متجر في السعودية والإمارات والكويت ومصر، زي نون ونمشي وماكس فاشون ونايس ون وستايلي وممزورلد وليفل شوز.
+• بتشتغل على أكتر من 70 متجر إلكتروني في السعودية والإمارات والكويت ومصر.
 • أول ما تفتح موقع متجر عندنا ليه كود، بتظهر لك بطاقة صغيرة فيها عدد الأكواد، وتقدر تقفلها بضغطة.
 • كل كود مكتوب معاه شرطه الحقيقي: النسبة والحد الأقصى والدول.
 • تقدر تختار الدولة واللغة (عربي أو English) من أيقونة الإضافة.
@@ -25,7 +25,7 @@
 ## Full description (EN)
 The Couponwaly extension shows the working promo codes for the store you are on, so you don't have to search for them.
 
-• Works on 70+ stores in Saudi Arabia, the UAE, Kuwait and Egypt, including Noon, Namshi, Max Fashion, NiceOne, Styli, Mumzworld and Level Shoes.
+• Works on 70+ online stores in Saudi Arabia, the UAE, Kuwait and Egypt.
 • When you open a store we have codes for, a small card shows how many codes there are. You can close it in one click.
 • Every code comes with its real terms: the rate, the cap and the countries.
 • Pick your country and language (Arabic or English) from the toolbar icon.
@@ -66,3 +66,7 @@ The extension is free. We may earn a commission if you buy after clicking "Copy 
 ## تحديث الإضافة لما يتضاف متجر جديد
 - الأكواد بتتحدّث لوحدها كل 6 ساعات من الموقع، من غير إصدار جديد.
 - لكن **دومين متجر جديد** محتاج إصدار جديد: `python3 tools/build.py 1.0.1`، وبعدها ارفع الـ zip.
+- Chrome Web Store item ID: pmjcoipeiaccobnefeempbicfacffpaf (draft uploaded 24 Oct 2026, publisher non-trader)
+
+## Review log
+- 24 Oct 2026: rejected for Keyword Spam (Yellow Argon): store names listed in the description. Fixed: no brand names anywhere in listing text. Never list store brands in the description again.
