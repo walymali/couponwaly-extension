@@ -79,8 +79,9 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
       await chrome.storage.local.set(msg.settings);
       reply({ feed: await refresh(), settings: await settings() });
     } else if (msg.type === 'activate' && /^https:\/\/couponwaly\.com\//.test(msg.url || '')) {
-      // The visitor pressed «Copy & open the store»: the code is already on the clipboard.
-      chrome.tabs.create({ url: msg.url, active: true });
+      // The visitor pressed «Copy & open the store» (popup) or «Copy & activate» (card on the shop, background tab so
+      // they stay on their basket): the code is already on the clipboard.
+      chrome.tabs.create({ url: msg.url, active: !msg.background });
       reply({ ok: true });
     } else {
       reply({});

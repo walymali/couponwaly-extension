@@ -1,6 +1,9 @@
 // Couponwaly extension — runs only on the shops listed in manifest.json.
 // Shows a small, dismissible card «N Couponwaly codes for <store>» once per shop per day; opening it lists the codes
-// with a copy button. Nothing is injected into the shop's own forms and no link is changed.
+// with a copy button. On basket and checkout pages the list opens by itself. «Copy & activate» copies the code and, at
+// most once per shop every 30 minutes, opens the shop through couponwaly.com in a background tab (disclosed in the
+// card). After the third code a visitor uses, the card asks once for a rating. Nothing is injected into the shop's own
+// forms and no link on the page is changed.
 (() => {
   if (window.__cwExt) return;
   window.__cwExt = true;
@@ -53,6 +56,8 @@
 .btn.ok{background:#15803d}
 .foot{padding:0 14px 12px;font-size:11px;color:#64748b}
 .foot a{color:#2563eb}
+.foot .note{margin:6px 0 0;font-size:11px;line-height:16px}
+.foot .rate{display:block;margin-top:8px;font-weight:600}
 .hidden{display:none}
 </style>
 <div class="card">
@@ -76,23 +81,41 @@
       c.terms ? (sm.textContent = c.terms) : sm.remove();
       it.querySelector('.code').textContent = c.code;
       const b = it.querySelector('.btn');
-      b.textContent = t('copy');
+      const label = !st.app && c.go ? t('copyActivate') : t('copy');
+      b.textContent = label;
       b.addEventListener('click', async () => {
         try { await navigator.clipboard.writeText(c.code); } catch (e) {
           const ta = document.createElement('textarea'); ta.value = c.code; sh.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
         }
         b.textContent = t('copied'); b.classList.add('ok');
-        setTimeout(() => { b.textContent = t('copy'); b.classList.remove('ok'); }, 2500);
+        setTimeout(() => { b.textContent = label; b.classList.remove('ok'); }, 2500);
+        const actKey = 'cw_act_' + st.id;
+        const s = await chrome.storage.local.get([actKey, 'cw_uses', 'cw_rated']);
+        if (!st.app && c.go && Date.now() - (s[actKey] || 0) > 30 * 60000) {
+          chrome.storage.local.set({ [actKey]: Date.now() });
+          chrome.runtime.sendMessage({ type: 'activate', url: c.go, background: true });
+        }
+        const uses = (s.cw_uses || 0) + 1;
+        chrome.storage.local.set({ cw_uses: uses });
+        if (uses >= 3 && !s.cw_rated) rate.classList.remove('hidden');
       });
       list.appendChild(it);
     }
     const foot = $('.foot');
-    foot.innerHTML = `<span></span> <a target="_blank" rel="noopener"></a>`;
+    foot.innerHTML = `<span></span> <a target="_blank" rel="noopener"></a><p class="note"></p><a class="rate hidden" target="_blank" rel="noopener"></a>`;
     foot.querySelector('span').textContent = t('footNote');
     const a = foot.querySelector('a');
     a.textContent = t('allCodes');
     a.href = st.url + '?utm_source=extension&utm_medium=card';
-    mini.addEventListener('click', () => { mini.classList.add('hidden'); list.classList.remove('hidden'); foot.classList.remove('hidden'); });
+    foot.querySelector('.note').textContent = t('activateNote');
+    const rate = foot.querySelector('.rate');
+    rate.textContent = t('rateAsk');
+    rate.href = 'https://chromewebstore.google.com/detail/pmjcoipeiaccobnefeempbicfacffpaf/reviews';
+    rate.addEventListener('click', () => { chrome.storage.local.set({ cw_rated: 1 }); });
+    const open = () => { mini.classList.add('hidden'); list.classList.remove('hidden'); foot.classList.remove('hidden'); };
+    mini.addEventListener('click', open);
+    // Basket and checkout pages: the moment a code is needed, so the list is open from the start.
+    if (/cart|checkout|basket|bag|payment|سلة|الدفع/i.test(decodeURIComponent(location.pathname + location.hash))) open();
     $('.x').addEventListener('click', () => { chrome.storage.local.set({ [key]: today }); root.remove(); });
     document.documentElement.appendChild(root);
   }

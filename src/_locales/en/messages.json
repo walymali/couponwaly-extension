@@ -1,9 +1,9 @@
 {
  "appName": {
-  "message": "Couponwaly"
+  "message": "Couponwaly: Promo Codes & Coupons"
  },
  "appDesc": {
-  "message": "Working promo codes for Saudi and Gulf stores, shown while you shop on the store's site. Copy a code in one click."
+  "message": "Working promo codes and coupons for Saudi and Gulf stores, shown while you shop on the store's site. Copy in one click."
  },
  "cardTitle": {
   "message": "$A$ Couponwaly codes for $B$",
@@ -56,5 +56,14 @@
  },
  "openSite": {
   "message": "Open Couponwaly"
+ },
+ "copyActivate": {
+  "message": "Copy & activate"
+ },
+ "activateNote": {
+  "message": "«Copy & activate» copies the code and opens the store through Couponwaly in a background tab; we may earn a commission at no cost to you."
+ },
+ "rateAsk": {
+  "message": "Did this save you money? Rate us on the Chrome Web Store"
  }
 }
