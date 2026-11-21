@@ -1,2 +1,6 @@
 dist/
 test/*.png
+test/raw/
+src/snapshot.json
+.DS_Store
+__pycache__/

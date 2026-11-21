@@ -1,7 +1,8 @@
 // Couponwaly extension — service worker.
 // Keeps a copy of the site's public code feed (refreshed every 6 hours), tells each tab how many codes its shop has
 // (toolbar badge) and answers the content script and the popup. No browsing data leaves the browser: the only
-// network request is the feed download, the same for every user.
+// network request is the feed download, the same for every user. With no network and no cache (a fresh install
+// offline) it falls back to snapshot.json, the copy of the feed bundled at build time.
 const API = 'https://couponwaly.com/wp-json/coupon-core/v1/extension/stores';
 const REFRESH_MIN = 360;
 
@@ -22,8 +23,12 @@ async function refresh() {
     return feed;
   } catch (e) {
     const { feed } = await chrome.storage.local.get('feed');
-    return feed || { stores: [] };
+    return feed || await snapshot();
   }
+}
+
+async function snapshot() {
+  try { return await (await fetch(chrome.runtime.getURL('snapshot.json'))).json(); } catch (e) { return { stores: [] }; }
 }
 
 async function getFeed() {
